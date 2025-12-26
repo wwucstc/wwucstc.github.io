@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Link } from 'react-router-dom';
+import TicketForm from './components/TicketForm';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar (Optional, but helpful for testing) */}
+      <nav className="bg-white shadow p-4 mb-8 flex gap-4">
+        <Link to="/" className="text-blue-600 hover:underline">Student Home</Link>
+        <Link to="/login" className="text-blue-600 hover:underline">Tutor Login</Link>
+        <Link to="/dashboard" className="text-blue-600 hover:underline">Dashboard</Link>
+      </nav>
+
+      {/* The "Screen" that changes based on URL */}
+      <Routes>
+        <Route path="/" element={<StudentLayout />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+// A small wrapper component to keep the "CS Tutoring Center" header 
+// only on the Student page
+function StudentLayout() {
+  return (
+    <div className="max-w-3xl mx-auto px-4">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-extrabold text-gray-900">CS Tutoring Center</h1>
+        <p className="mt-2 text-lg text-gray-600">
+          Submit your question below and a tutor will be with you shortly.
+        </p>
+      </div>
+      <TicketForm />
+    </div>
+  );
+}
+
+export default App;
